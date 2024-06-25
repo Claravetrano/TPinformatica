@@ -1,4 +1,4 @@
-#from crypt import methods
+from crypt import methods
 from flask import Flask, jsonify, request
 app = Flask(__name__) 
 
