@@ -1,48 +1,48 @@
 import database
 import sqlite3
 from api import obtener_foto
-# from database import ver_profesionales
+from database import ver_profesionales
 
-# class Usuario:
-#     def __init__(self, id_usuario, contraseña, nombre, apellido, localidad):
-#         self.user_id = id_usuario
-#         self.__password = contraseña
-#         self.nombre = nombre
-#         self.apellido = apellido
-#         self.localidad = localidad
+class Usuario:
+    def __init__(self, id_usuario, contraseña, nombre, apellido, localidad):
+         self.user_id = id_usuario
+         self.__password = contraseña
+         self.nombre = nombre
+         self.apellido = apellido
+         self.localidad = localidad
 
-#     def set_password(self, new_password):
-#         self.__password = new_password
+    def set_password(self, new_password):
+         self.__password = new_password
 
-#     def get_password(self):
-#         return self.__password
-
-
-# class Profesional(Usuario):
-#     def __init__(self, id_usuario, contraseña, nombre, apellido, localidad, habilidades):
-#         super().__init__(id_usuario, contraseña, nombre, apellido, localidad)
-#         self.habilidades = habilidades
+    def get_password(self):
+         return self.__password
 
 
-# class Contratista(Usuario):
-#     def __init__(self, id_usuario, contraseña, nombre, apellido, localidad, empresa):
-#         super().__init__(id_usuario, contraseña, nombre, apellido, localidad)
-#         self.empresa = empresa
+class Profesional(Usuario):
+    def __init__(self, id_usuario, contraseña, nombre, apellido, localidad, habilidades):
+        super().__init__(id_usuario, contraseña, nombre, apellido, localidad)
+        self.habilidades = habilidades
+
+
+class Contratista(Usuario):
+    def __init__(self, id_usuario, contraseña, nombre, apellido, localidad, empresa):
+        super().__init__(id_usuario, contraseña, nombre, apellido, localidad)
+        self.empresa = empresa
 
 
 
-# def registrar_usuario(usuario):
-#     conn = sqlite3.connect("usuarios.db")
-#     cursor = conn.cursor()
-#     if isinstance(usuario, Profesional):
-#         tipo = "profesional"
-#         valores = (tipo, usuario.user_id, usuario.get_password(), usuario.nombre, usuario.apellido, usuario.localidad, ",".join(usuario.habilidades), "")
-#     elif isinstance(usuario, Contratista):
-#         tipo = "contratista"
-#         valores = (tipo, usuario.user_id, usuario.get_password(), usuario.nombre, usuario.apellido, usuario.localidad, "", usuario.empresa)
-#     cursor.execute("INSERT INTO usuarios (tipo, user_id, contraseña, nombre, apellido, localidad, habilidades, empresa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", valores)
-#     conn.commit()
-#     conn.close()
+def registrar_usuario(usuario):
+    conn = sqlite3.connect("usuarios.db")
+    cursor = conn.cursor()
+    if isinstance(usuario, Profesional):
+        tipo = "profesional"
+        valores = (tipo, usuario.user_id, usuario.get_password(), usuario.nombre, usuario.apellido, usuario.localidad, ",".join(usuario.habilidades), "")
+    elif isinstance(usuario, Contratista):
+        tipo = "contratista"
+        valores = (tipo, usuario.user_id, usuario.get_password(), usuario.nombre, usuario.apellido, usuario.localidad, "", usuario.empresa)
+    cursor.execute("INSERT INTO usuarios (tipo, user_id, contraseña, nombre, apellido, localidad, habilidades, empresa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", valores)
+    conn.commit()
+    conn.close()
 
 def login(categoria,userid, contrasenia):
     conn = sqlite3.connect("base1.db")
@@ -86,24 +86,24 @@ def verProfesionales():
         print("No se han encontrado ningun profesional")
 
 
-# def init_database():
-#     conn = sqlite3.connect("usuarios.db")
-#     cursor = conn.cursor()
-#     cursor.execute('''CREATE TABLE IF NOT EXISTS usuarios (
-#                       id INTEGER PRIMARY KEY,
-#                       tipo TEXT,
-#                       user_id TEXT,
-#                       contraseña TEXT,
-#                       nombre TEXT,
-#                       apellido TEXT,
-#                       localidad TEXT,
-#                       habilidades TEXT,
-#                       empresa TEXT)''')
-#     conn.commit()
-#     conn.close()
+def init_database():
+    conn = sqlite3.connect("usuarios.db")
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS usuarios (
+                       id INTEGER PRIMARY KEY,
+                       tipo TEXT,
+                       user_id TEXT,
+                       contraseña TEXT,
+                       nombre TEXT,
+                       apellido TEXT,
+                       localidad TEXT,
+                       habilidades TEXT,
+                       empresa TEXT)''')
+    conn.commit()
+    conn.close()
     
 def main():
-    # init_database()
+    init_database()
     while True:
         usuario = None
         if not usuario:
@@ -118,11 +118,11 @@ def main():
                         verProfesionales()
                 else:
                     print("Usuario y/o contraseña incorrectos")
-        # else:
-        #      if isinstance(usuario, Profesional):
-        #          print("Los profesionales no pueden realizar acciones en esta versión de la aplicación.")
-        #      elif isinstance(usuario, Contratista):
+        else:
+              if isinstance(usuario, Profesional):
+                  print("Los profesionales no pueden realizar acciones en esta versión de la aplicación.")
+              elif isinstance(usuario, Contratista):
                   
-        #          pass
+                  pass
 
 main()
