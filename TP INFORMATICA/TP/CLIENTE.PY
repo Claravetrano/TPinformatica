@@ -126,5 +126,3 @@ def main():
                   pass
 
 main()
-
-print(main)
